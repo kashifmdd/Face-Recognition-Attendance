@@ -13,50 +13,22 @@ from face_recognition import face_locations, face_encodings, face_distance
 video_capture = cv2.VideoCapture(0)
 
 # Load Known faces
-kashif_image = face_recognition.load_image_file("faces/kashif.jpg")
-kashif_encoding = face_recognition.face_encodings(kashif_image)[0]
+ajay_image = face_recognition.load_image_file("faces/ajay.jpeg")
+ajay_encoding = face_recognition.face_encodings(ajay_image)[0]
 
-gauri_image = face_recognition.load_image_file("faces/gauri.jpg")
-gauri_encoding = face_recognition.face_encodings(gauri_image)[0]
+khan_image = face_recognition.load_image_file("faces/khan.jpeg")
+khan_encoding = face_recognition.face_encodings(khan_image)[0]
 
-# diya_image = face_recognition.load_image_file("faces/diya.jpg")
-# diya_encoding = face_recognition.face_encodings(diya_image)[0]
-
-akash_image = face_recognition.load_image_file("faces/akash.jpg")
-akash_encoding = face_recognition.face_encodings(akash_image)[0]
-
-# vikas_image = face_recognition.load_image_file("faces/vikas.jpg")
-# vikas_encoding = face_recognition.face_encodings(vikas_image)[0]
-
-deepak_image = face_recognition.load_image_file("faces/deepak.jpg")
-deepak_encoding = face_recognition.face_encodings(deepak_image)[0]
-
-# mansi_image = face_recognition.load_image_file("faces/mansi.jpg")
-# mansi_encoding = face_recognition.face_encodings(mansi_image)[0]
-
-happy_image = face_recognition.load_image_file("faces/happy.jpg")
-happy_encoding = face_recognition.face_encodings(happy_image)[0]
-
-# priyanka_image = face_recognition.load_image_file("faces/priyanka.jpg")
-# priyanka_encoding = face_recognition.face_encodings(priyanka_image)[0]
-#
-# ali_image = face_recognition.load_image_file("faces/ali.jpg")
-# ali_encoding = face_recognition.face_encodings(ali_image)[0]
-
-joti_image = face_recognition.load_image_file("faces/joti.jpg")
-joti_encoding = face_recognition.face_encodings(joti_image)[0]
-
-shivam_image = face_recognition.load_image_file("faces/shivam.jpg")
-shivam_encoding = face_recognition.face_encodings(shivam_image)[0]
-
-shiree_image = face_recognition.load_image_file("faces/shiree.jpg")
-shiree_encoding = face_recognition.face_encodings(shiree_image)[0]
+varun_image = face_recognition.load_image_file("faces/varun.jpeg")
+varun_encoding = face_recognition.face_encodings(varun_image)[0]
 
 
 
 
-known_face_encodings = [kashif_encoding, joti_encoding, shivam_encoding, happy_encoding, akash_encoding, deepak_encoding, gauri_encoding, shiree_encoding]#, priyanka_encoding, diya_encoding, ali_encoding, vikas_encoding, shiree_encoding, mansi_encoding]
-known_face_names = ["Kashif", "Joti", "shivam", "Happy", "Akash", "Deepak", "gauri","shiree", "Priyanka", "Diya", "Ali", "Vikas", "Mansi"]
+
+
+known_face_encodings = [ajay_encoding, khan_encoding, varun_encoding]
+known_face_names = ["ajay", "khan", "varun"]
 
 # List of expected students
 students = known_face_names.copy()
@@ -86,22 +58,22 @@ while True:
         best_match_index = np.argmin(face_distance)
 
         if(matches[best_match_index]):
-            name = known_face_names[best_match_index]
+            known_face_name = known_face_names[best_match_index]
 
         # Add the text if a person is present
-        if name in known_face_names:
+        if known_face_name in known_face_names:
             font = cv2.FONT_HERSHEY_SIMPLEX
             bottomLeftCornerOfText = (10, 100)
             fontScale = 1.5
             fontColor = (255, 0, 0)
             thickness = 3
             lineType = 2
-            cv2.putText(frame, name + " Present", bottomLeftCornerOfText, font, fontScale, fontColor, thickness, lineType)
+            cv2.putText(frame, known_face_name + " Present", bottomLeftCornerOfText, font, fontScale, fontColor, thickness, lineType)
 
-            if name in students:
-                students.remove(name)
+            if known_face_names in students:
+                students.remove(known_face_name)
                 current_time = now.strftime("%H-%M-%S")
-                lnwriter.writerow([name, current_time])
+                lnwriter.writerow([known_face_name, current_time])
 
     cv2.imshow("Attendace", frame)
     if cv2.waitKey(1) & 0xFF == ord("q"):
